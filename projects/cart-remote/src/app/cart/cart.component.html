@@ -1,0 +1,52 @@
+<section class="cart">
+  <h1>Carrinho</h1>
+  <p class="sub">Servido pelo <code>cart-remote</code> &middot; estado compartilhado com o <code>products-remote</code></p>
+
+  @if (done(); as d) {
+    <div class="success" role="status">
+      Pedido confirmado: {{ d.items }} item(ns), total {{ d.total | brl }}.
+    </div>
+  }
+
+  @if (cart.items().length === 0) {
+    <div class="empty">
+      <div class="big" aria-hidden="true">🛒</div>
+      <p>Seu carrinho está vazio. Adicione produtos pelo catálogo.</p>
+    </div>
+  } @else {
+    <ul class="lines">
+      @for (i of cart.items(); track i.productId) {
+        <li class="line">
+          <span class="emoji" aria-hidden="true">{{ i.emoji }}</span>
+          <div class="info">
+            <strong>{{ i.name }}</strong>
+            <span class="unit">{{ i.price | brl }} / un.</span>
+          </div>
+          <div class="qty">
+            <button type="button" [attr.aria-label]="'Diminuir ' + i.name" (click)="cart.setQty(i.productId, i.qty - 1)">&minus;</button>
+            <span>{{ i.qty }}</span>
+            <button type="button" [attr.aria-label]="'Aumentar ' + i.name" (click)="cart.setQty(i.productId, i.qty + 1)">+</button>
+          </div>
+          <span class="sub-total">{{ i.price * i.qty | brl }}</span>
+          <button type="button" class="remove" [attr.aria-label]="'Remover ' + i.name" (click)="cart.remove(i.productId)">&times;</button>
+        </li>
+      }
+    </ul>
+
+    <footer class="summary">
+      <div class="total">
+        <span>Total ({{ cart.count() }} itens)</span>
+        <strong>{{ cart.total() | brl }}</strong>
+      </div>
+      @if (session.isAuthenticated()) {
+        <button type="button" class="primary" (click)="checkout()">
+          Finalizar compra como {{ session.user()?.name }}
+        </button>
+      } @else {
+        <p class="login-hint">Entre para finalizar a compra.</p>
+        <button type="button" class="primary" (click)="session.loginAsDemo()">Entrar como demo</button>
+      }
+      <button type="button" class="ghost" (click)="cart.clear()">Esvaziar carrinho</button>
+    </footer>
+  }
+</section>
