@@ -1,0 +1,30 @@
+<div class="wrap">
+  <form class="card" (ngSubmit)="submit()" #f="ngForm">
+    <div class="logo" aria-hidden="true">◆</div>
+    <h1>Micro-frontends</h1>
+    <p class="sub">Shell + Native Federation. Entre para acessar os módulos.</p>
+
+    <label>
+      E-mail
+      <input name="email" type="email" autocomplete="username" required [ngModel]="email()" (ngModelChange)="email.set($event); error.set(false)" />
+    </label>
+    <label>
+      Senha
+      <input name="password" type="password" autocomplete="current-password" required [ngModel]="password()" (ngModelChange)="password.set($event); error.set(false)" />
+    </label>
+
+    @if (error()) {
+      <p class="error" role="alert">Credenciais inválidas.</p>
+    }
+
+    <button type="submit" class="primary" [disabled]="f.invalid">Entrar</button>
+    <button type="button" class="demo" (click)="enterAsDemo()">Entrar como demo</button>
+
+    <aside class="hint">
+      <strong>Credenciais demo</strong>
+      <code>{{ demo.email }}</code>
+      <code>{{ demo.password }}</code>
+      <button type="button" class="link" (click)="fillDemo()">Preencher formulário</button>
+    </aside>
+  </form>
+</div>

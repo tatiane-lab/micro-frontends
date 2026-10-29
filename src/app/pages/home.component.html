@@ -1,0 +1,40 @@
+<section class="home">
+  <h1>Olá, {{ session.user()?.name }}</h1>
+  <p class="sub">Painel do shell: sessão, estado compartilhado e saúde dos micro-frontends.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="label">Itens no carrinho</span>
+      <strong>{{ cart.count() }}</strong>
+    </div>
+    <div class="stat">
+      <span class="label">Total</span>
+      <strong>{{ cart.total() | brl }}</strong>
+    </div>
+    <div class="stat">
+      <span class="label">Perfil</span>
+      <strong>{{ session.user()?.role }}</strong>
+    </div>
+  </div>
+
+  <h2>Micro-frontends</h2>
+  <div class="remotes">
+    @for (r of remotes(); track r.name) {
+      <article class="remote">
+        <div class="top">
+          <strong>{{ r.name }}</strong>
+          <span class="pill" [class]="r.status">
+            {{ r.status === 'online' ? 'online' : r.status === 'offline' ? 'offline' : 'verificando' }}
+          </span>
+        </div>
+        <code>{{ r.url }}</code>
+        <div class="actions">
+          <a [routerLink]="r.route">Abrir</a>
+          <button type="button" (click)="ping(r)">Reverificar</button>
+        </div>
+      </article>
+    } @empty {
+      <p class="sub">Nenhum remote registrado no manifest.</p>
+    }
+  </div>
+</section>

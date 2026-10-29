@@ -1,31 +1,31 @@
 import { Routes } from '@angular/router';
-import { loadRemoteModule } from '@angular-architects/native-federation';
+import { authGuard } from './core/auth.guard';
+import { REMOTES, loadRemoteRoutes } from './core/remote-loader';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: 'products',
-    loadChildren: () =>
-      loadRemoteModule({
-        remoteEntry: 'http://localhost:4201/remoteEntry.json',
-        exposedModule: './ProductsModule',
-      }).then((m) => m.PRODUCTS_ROUTES),
-  },
-  {
-    path: 'cart',
-    loadChildren: () =>
-      loadRemoteModule({
-        remoteEntry: 'http://localhost:4202/remoteEntry.json',
-        exposedModule: './CartModule',
-      }).then((m) => m.CART_ROUTES),
+    path: 'login',
+    title: 'Entrar',
+    loadComponent: () => import('./pages/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'home',
-    loadComponent: () =>
-      import('./home/home.component').then((m) => m.HomeComponent),
+    title: 'Home',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/home.component').then((m) => m.HomeComponent),
   },
+  {
+    path: 'products',
+    title: 'Produtos',
+    canActivate: [authGuard],
+    loadChildren: loadRemoteRoutes(REMOTES.products),
+  },
+  {
+    path: 'cart',
+    title: 'Carrinho',
+    canActivate: [authGuard],
+    loadChildren: loadRemoteRoutes(REMOTES.cart),
+  },
+  { path: '**', redirectTo: 'home' },
 ];
