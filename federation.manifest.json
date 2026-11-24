@@ -1,0 +1,4 @@
+{
+  "products-remote": "https://tatiane-lab.github.io/micro-frontends/products-remote/remoteEntry.json",
+  "cart-remote": "https://tatiane-lab.github.io/micro-frontends/cart-remote/remoteEntry.json"
+}

@@ -1,0 +1,1 @@
+import{a as e}from"@nf-internal/chunk-FWLWFLJY";var o=[e({path:"",loadComponent:()=>import("@nf-internal/cart.component-P2YW3KXH").then(t=>t.CartComponent)},typeof ngServerMode<"u"&&ngServerMode?{\u0275entryName:"projects/cart-remote/src/app/cart/cart.component.ts"}:{})];export{o as CART_ROUTES};

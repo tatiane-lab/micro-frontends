@@ -1,0 +1,1 @@
+import{a as o}from"@nf-internal/chunk-FWLWFLJY";var t=[o({path:"",loadComponent:()=>import("@nf-internal/catalog.component-HOHM72XF").then(e=>e.CatalogComponent)},typeof ngServerMode<"u"&&ngServerMode?{\u0275entryName:"projects/products-remote/src/app/products/catalog.component.ts"}:{})];export{t as PRODUCTS_ROUTES};
